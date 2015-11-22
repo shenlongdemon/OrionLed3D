@@ -25,8 +25,41 @@ public class LedLayer extends GridLayout {
         this._layerIndex = layerIndex;
         init();
     }
+    public  List<Integer> getMatrixData()
+    {
+        List<Integer> data =new ArrayList<Integer>();
+        for(int i = _size - 1 ; i >= 0;  i--)
+        {
+            int dt = 0;
+            for(int j = 0 ; j < _size; j++)
+            {
+                Led led = _leds.get(i*_size + j);
+                if(led.getStatus() == true)
+                {
+                    dt+= Math.pow(2,_size - j - 1);
+                }
+
+            }
+            data.add(dt);
+        }
+        return data;
+    }
     private void init()
     {
+        if(_layerIndex % 3 == 0)
+        {
+            this.setBackgroundColor(Color.parseColor("#81BEF7"));
+        }
+        else if(_layerIndex % 3 == 1)
+        {
+            this.setBackgroundColor(Color.parseColor("#F6CEEC"));
+        }
+        else
+        {
+            this.setBackgroundColor(Color.parseColor("#A9F5BC"));
+        }
+
+        //this.setAlpha(0.5f);
         this.setColumnCount(_size);
         this.setRowCount(_size);
         this.setOrientation(HORIZONTAL);
@@ -34,13 +67,11 @@ public class LedLayer extends GridLayout {
         {
             for(int j = 0 ; j < _size; j++)
             {
-                Led led = new Led(_context, _withHeightOfUnit, i , j);
+                Led led = new Led(_context, _withHeightOfUnit,_layerIndex, i , j);
                 _leds.add(led);
                 this.addView(led, j);
             }
         }
-        this.setBackgroundColor(Color.BLUE);
     }
-
 }
 

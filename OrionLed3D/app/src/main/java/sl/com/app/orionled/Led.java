@@ -14,14 +14,17 @@ public class Led extends Button {
     private int _withHeightOfUnit;
     private int _row = 0;
     private int _column = 0;
-    public Led(Context context, int withHeightOfUnit, int row, int column){
+    private int _layerIndex = 0;
+    public Led(Context context, int withHeightOfUnit, int layerIndex, int row, int column){
         super(context);
         this._context = context;
         this._withHeightOfUnit = withHeightOfUnit;
+        this._layerIndex = layerIndex;
         this._row =  row;
         this._column =  column;
         init();
     }
+    public boolean getStatus(){return _ledStatus;}
     private void init()
     {
         this.setLayoutParams(new LinearLayout.LayoutParams(_withHeightOfUnit, _withHeightOfUnit));
@@ -29,6 +32,7 @@ public class Led extends Button {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                ManagerUI.getInstance().bringToFront(_layerIndex);
                 _ledStatus = !_ledStatus;
                 changeLedStatus();
             }
@@ -36,6 +40,7 @@ public class Led extends Button {
     }
     private void changeLedStatus()
     {
+
         if(_ledStatus == true) {
             this.setBackgroundResource(R.drawable.on);
         }
