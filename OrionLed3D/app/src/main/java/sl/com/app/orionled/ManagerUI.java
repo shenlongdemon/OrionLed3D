@@ -1,6 +1,7 @@
 package sl.com.app.orionled;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -31,11 +32,18 @@ public class ManagerUI {
     private static final  int BTN_INDEX_COLOR = Color.parseColor("#CEF6EC");
     private List<List<Integer>> _description;
     private int _decriptionIndex = 0;
+    private ProgressDialog _genViewProgressDialog;
     private ManagerUI()
     {
 
     }
-
+    public void showGenViewProgressDialog(){
+        _genViewProgressDialog = ProgressDialog.show(_context, "Handling...!",
+                "View is generating !!!", true);
+    }
+    public void hideGenViewProgressDialog(){
+        _genViewProgressDialog.dismiss();
+    }
     public static ManagerUI getInstance()
     {
         if(_managerUI == null)
